@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.AbstractClasses;
 
 import com.roboctopi.cuttlefish.controller.MecanumController;
 import com.roboctopi.cuttlefish.utils.Direction;
+import com.roboctopi.cuttlefishftcbridge.devices.CuttleServo;
 import com.roboctopi.cuttlefishftcbridge.opmodeTypes.GamepadOpMode;
 
 import com.roboctopi.cuttlefishftcbridge.devices.CuttleMotor;
@@ -19,19 +20,27 @@ public abstract class AbstractOpMode extends GamepadOpMode {
     public CuttleMotor rightFrontMotor;
     public CuttleMotor rightBackMotor ;
     public CuttleMotor leftBackMotor  ;
+    public CuttleMotor armMotor;
+    public CuttleServo claw;
+
     public MecanumController drive;
+
+    public CuttleRevHub ctrlHub;
+    public CuttleRevHub expHub;
 
     public void onInit() {
         ctrlHub = new CuttleRevHub(hardwareMap,CuttleRevHub.HubTypes.CONTROL_HUB);
+        expHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.EXPANSION_HUB);
 
 
         leftFrontMotor  = ctrlHub.getMotor(0);
         rightFrontMotor = ctrlHub.getMotor(1);
         leftBackMotor   = ctrlHub.getMotor(2);
         rightBackMotor  = ctrlHub.getMotor(3);
+        armMotor = expHub.getMotor(0);
+        claw = ctrlHub.getServo(0);
 
         leftBackMotor .setDirection(Direction.REVERSE);
-        leftFrontMotor.setDirection(Direction.REVERSE);
 
         drive = new MecanumController(rightFrontMotor, rightBackMotor, leftFrontMotor, leftBackMotor);
     }
